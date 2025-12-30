@@ -43,12 +43,10 @@ export default class Sketch {
     this.mouseTarget = new THREE.Vector2();
     this.paused = false;
 
-    // Track current image and animation state
     this.currentImageIndex = 0;
     this.totalImages = 3;
     this.isAnimating = false;
 
-    // Text content for each page
     this.textContent = ["IMAGE &", "PARALLAX", "TRANSITION"];
 
     this.setupResize();
@@ -167,7 +165,6 @@ export default class Sketch {
     this.renderer.domElement.addEventListener("click", handleClick);
     this.renderer.domElement.addEventListener("touchend", handleTouch);
 
-    // Store handlers for cleanup
     this.eventHandlers.click = handleClick;
     this.eventHandlers.touchend = handleTouch;
   }
@@ -186,7 +183,6 @@ export default class Sketch {
     const currentIndex = this.currentImageIndex;
     const toIndex = targetIndex;
 
-    // Update text content
     this.updateTextContent(targetIndex);
 
     let tl = gsap.timeline({
@@ -245,7 +241,7 @@ export default class Sketch {
         1
       );
 
-      // RGB effect forward
+
       tl.to(
         this.effectPass1.uniforms.uProgress,
         {
@@ -291,7 +287,7 @@ export default class Sketch {
         1
       );
 
-      // RGB effect forward
+
       tl.to(
         this.effectPass1.uniforms.uProgress,
         {

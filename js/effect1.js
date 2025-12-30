@@ -5,7 +5,6 @@ import { Vector2 } from "three";
  */
 
 /**
- * Water ripple shader for curtain transition effect.
  *
  * @constant
  * @type {ShaderMaterial~Shader}
@@ -48,30 +47,23 @@ const RippleShader = {
 		void main() {
             vec2 p = vUv;
             
-            // Only apply ripple effect when uProgress is between 0 and 1 (during transition)
             if(uProgress > 0.0 && uProgress < 1.0) {
-                // Water ripple effect parameters
-                float frequency = 20.0; // Number of ripples
-                float baseAmplitude = 0.03; // Base strength of the ripple distortion
-                float speed = 2.0; // Speed of ripple expansion
-                
-                // Amplitude is 0 when still, peaks during transition, then fades
-                // This creates a smooth start and end
-                float amplitudeMultiplier = sin(uProgress * 3.14159); // 0 -> 1 -> 0
+                float frequency = 20.0; 
+                float baseAmplitude = 0.03;
+                float speed = 2.0; 
+
+                float amplitudeMultiplier = sin(uProgress * 3.14159);
                 float amplitude = baseAmplitude * amplitudeMultiplier * 1.0;
-                
-                // Calculate distance from center
+
                 vec2 toCenter = p - center;
                 float dist = length(toCenter);
-                
-                // Create expanding ripple wave
+            
                 float wave = sin((dist * frequency) - (uProgress * speed * 6.28318)) * amplitude * 5.0;
                 
-                // Apply ripple distortion
+
                 vec2 rippleOffset = normalize(toCenter) * wave;
                 p += rippleOffset * 1.0;
-                
-                // Add secondary smaller ripples for more realistic water effect
+
                 float wave2 = sin((dist * frequency * 2.0) - (uProgress * speed * 8.0)) * amplitude ;
                 p += normalize(toCenter) * wave2;
             }
